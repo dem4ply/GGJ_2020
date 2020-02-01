@@ -1,4 +1,5 @@
-﻿using chibi.motor.npc;
+﻿using UnityEngine;
+using chibi.motor.npc;
 
 namespace fisher.motor.weapons.gun.bullet
 {
@@ -9,6 +10,10 @@ namespace fisher.motor.weapons.gun.bullet
 			base.update_motion();
 			transform.LookAt(
 				transform.position + ridgetbody.velocity );
+		}
+
+		protected override void _proccess_gravity( ref Vector3 velocity_vector )
+		{
 		}
 	}
 }

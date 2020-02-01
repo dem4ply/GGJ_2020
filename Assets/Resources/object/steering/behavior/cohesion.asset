@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed79d85f02c418a468de1de11f1a2627, type: 3}
   m_Name: cohesion
   m_EditorClassIdentifier: 
-  weight: 1.5
+  weight: 40
   debug_color: {r: 0.5754717, g: 0.23073158, b: 0.23073158, a: 1}
   seek_color: {r: 0.75294125, g: 0.627451, b: 0, a: 1}
   layers:
