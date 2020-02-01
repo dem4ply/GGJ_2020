@@ -6,12 +6,15 @@ namespace chibi.controller.steering.behavior
 	[CreateAssetMenu( menuName = "chibi/steering/behavior/arrive" )]
 	public class Arrive : Behavior
 	{
-		public float deacceleration_distant = 0.5f;
+		public float deacceleration_distant = 0.05f;
 
 		public override Vector3 desire_direction(
 			Steering controller, Transform target,
 			Steering_properties properties )
 		{
+			var ds = desire_speed( controller, target, properties );
+			if ( ds == 0f )
+				return Vector3.zero;
 			var direction = seek( controller, target.position );
 			direction.Normalize();
 			debug( controller.controller, target, direction );
@@ -25,14 +28,16 @@ namespace chibi.controller.steering.behavior
 			var distance = target.position - controller.transform.position;
 			if ( distance.magnitude < deacceleration_distant )
 			{
-				float speed = (float)System.Math.Round(
-					distance.magnitude / deacceleration_distant );
-				if ( speed < 0.1f )
+				if ( distance.magnitude < 0.1f )
+				{
+					var c = controller.controller as space_beaver.controller.Piece_controller;
+					if ( c )
+						c.on_home();
 					return 0f;
-				return speed;
+				}
+
 			}
-			else
-				return 1f;
+			return 1f;
 		}
 
 		public virtual void debug(

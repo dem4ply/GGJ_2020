@@ -62,6 +62,7 @@ namespace platformer.controller.platform
 		{
 			var seek = chibi.controller.steering.behavior.Arrive.CreateInstance<
 				chibi.controller.steering.behavior.Arrive>();
+			seek.deacceleration_distant = 0.05f;
 			steering.target = target;
 			steering.behaviors.Clear();
 			steering.behaviors.Add( seek );
