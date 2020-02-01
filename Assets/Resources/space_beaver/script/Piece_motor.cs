@@ -57,6 +57,8 @@ namespace space_beaver.motor
 			{
 				use_gravity = false;
 				base.update_motion();
+				var distant_to_home = Vector3.Distance( transform.position, home.position );
+				transform.rotation = Quaternion.Lerp( transform.rotation, home.rotation, distant_to_home );
 			}
 			if ( stay_in_home )
 			{
@@ -72,6 +74,7 @@ namespace space_beaver.motor
 				//debug.log( "c {0}", transform.position );
 				//debug.log( "h {0}", home.position );
 				transform.position = home.position;
+				transform.rotation = home.rotation;
 				//debug.log( "p {0}", transform.position );
 			}
 		}
@@ -80,6 +83,15 @@ namespace space_beaver.motor
 		{
 				var r = GetComponent<Rigidbody>();
 				r.velocity = new Vector3( r.velocity.x, 0, r.velocity.z );
+		}
+
+		protected void OnDrawGizmos()
+		{
+			if ( home && !stay_in_home  )
+			{
+				helper.draw.arrow.gizmo(
+					transform.position, home.transform.position - transform.position, Color.green );
+			}
 		}
 	}
 }

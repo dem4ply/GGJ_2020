@@ -8,6 +8,12 @@ namespace space_beaver.controller
 	public class Piece_controller : chibi.controller.Controller_motor
 	{
 		public Transform home;
+		public Piece_controller left, right;
+		public bool is_right_leaf = true;
+		public bool is_left_leaf = true;
+		public VrGrabber.VrgGrabber grabber;
+
+		public sound.Sound attach;
 
 		protected override void _init_cache()
 		{
@@ -16,6 +22,10 @@ namespace space_beaver.controller
 				debug.error( "la piesa no tiene home" );
 
 			prepare_motor();
+
+			grabber = GameObject.FindObjectOfType<VrGrabber.VrgGrabber>();
+			if ( !grabber )
+				debug.error( "no tiene el grabber asignado" );
 		}
 
 		public Piece_motor motor_piece
@@ -32,21 +42,49 @@ namespace space_beaver.controller
 		public void go_home()
 		{
 			seek( home );
+			if ( grabber )
+				grabber.Release();
 		}
 
 		public void on_home()
 		{
+			if ( !motor_piece.stay_in_home )
+			{
+				debug.log( "on home" );
+				close();
+				if ( left )
+					left.close();
+				if ( right )
+					right.close();
+				if ( attach )
+					attach.play();
+			}
 			motor_piece.motor_own_physics = false;
 			motor_piece.use_gravity = false;
 			motor_piece.stay_in_home = true;
 			motor_piece.enable_coliders = false;
+
+			steering.enabled = false;
+			Destroy( steering );
+
+		}
+
+		public void on_grab()
+		{
+			motor_piece.motor_own_physics = true;
+			motor_piece.use_gravity = true;
+			motor_piece.stay_in_home = false;
+			motor_piece.enable_coliders = true;
 		}
 
 		private void OnTriggerEnter( Collider other )
 		{
-			motor_piece.motor_own_physics = true;
-			motor_piece.clean_gravity();
-			go_home();
+			if ( other.transform == home )
+			{
+				motor_piece.motor_own_physics = true;
+				motor_piece.clean_gravity();
+				go_home();
+			}
 		}
 
 		public chibi.controller.steering.Steering steering
@@ -67,31 +105,13 @@ namespace space_beaver.controller
 		public virtual void prepare_motor()
 		{
 			if ( !motor_piece )
-				motor_piece = find_child_platforms();
-			if ( !motor_piece )
 				motor_piece = GetComponent<Piece_motor>();
 			if ( !motor_piece )
-				debug.error( "no tiene un platform motor" );
+				debug.error( "no tiene un piece motor" );
 			else
 			{
 				motor_piece.home = home;
 			}
-		}
-
-		public virtual Piece_motor find_child_platforms()
-		{
-			Piece_motor motor = null;
-
-			if ( transform.childCount < 1 )
-			{
-				debug.warning( "la plataforma no tiene hijos" );
-			}
-			else
-			{
-				Transform platform = transform.GetChild( 0 );
-				motor = platform.GetComponent<Piece_motor>();
-			}
-			return motor;
 		}
 
 		public void seek( Transform target )
@@ -104,14 +124,26 @@ namespace space_beaver.controller
 			steering.reload();
 		}
 
-		protected void OnDrawGizmos()
+		public void close()
 		{
-			if ( home )
-			{
-				helper.draw.arrow.gizmo(
-					transform.position, home.transform.position - transform.position, Color.green );
-			}
+			debug.log( "close" );
 		}
 
+		public void open()
+		{
+			debug.log( "open" );
+		}
+		protected void OnDrawGizmos()
+		{
+			if ( left )
+				helper.draw.arrow.gizmo(
+					transform.position, left.transform.position - transform.position,
+					Color.black);
+
+			if ( right )
+				helper.draw.arrow.gizmo(
+					transform.position, right.transform.position - transform.position,
+					Color.blue );
+		}
 	}
 }
