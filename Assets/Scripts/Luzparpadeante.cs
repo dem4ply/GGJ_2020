@@ -10,18 +10,27 @@ public class Luzparpadeante : MonoBehaviour
     public float minWaitTime;
     public float maxWaitTime;
 
+   public bool enable_light = true;
+
     void Start()
     {
         testLight = GetComponent<Light>();
         StartCoroutine(Flashing());
     }
 
+   public void shutdown()
+   {
+      enable_light = false;
+      testLight.enabled = false;
+   }
+
     IEnumerator Flashing()
     {
-        while (true)
+        while ( enable_light )
         {
             yield return new WaitForSeconds(Random.Range(minWaitTime, maxWaitTime));
-            testLight.enabled = !testLight.enabled;
+            if ( enable_light )
+               testLight.enabled = !testLight.enabled;
 
         }
     }

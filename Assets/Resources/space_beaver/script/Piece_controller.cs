@@ -14,6 +14,8 @@ namespace space_beaver.controller
 		public bool is_left_leaf = true;
 		public VrGrabber.VrgGrabber grabber;
 
+		public bool is_closed = false;
+
 		public sound.Sound attach;
 
 		public UnityEvent on_close = new UnityEvent();
@@ -44,6 +46,8 @@ namespace space_beaver.controller
 
 		public void go_home()
 		{
+			motor_piece.motor_own_physics = true;
+			motor_piece.clean_gravity();
 			seek( home );
 			if ( grabber )
 				grabber.Release();
@@ -70,6 +74,8 @@ namespace space_beaver.controller
 			steering.enabled = false;
 			Destroy( steering );
 
+			is_closed = true;
+
 		}
 
 		public void on_grab()
@@ -84,8 +90,6 @@ namespace space_beaver.controller
 		{
 			if ( other.transform == home )
 			{
-				motor_piece.motor_own_physics = true;
-				motor_piece.clean_gravity();
 				go_home();
 			}
 		}
