@@ -44,6 +44,8 @@ namespace space_beaver.controller
 
 		public void go_home()
 		{
+			motor_piece.motor_own_physics = true;
+			motor_piece.clean_gravity();
 			seek( home );
 			if ( grabber )
 				grabber.Release();
@@ -84,8 +86,6 @@ namespace space_beaver.controller
 		{
 			if ( other.transform == home )
 			{
-				motor_piece.motor_own_physics = true;
-				motor_piece.clean_gravity();
 				go_home();
 			}
 		}
