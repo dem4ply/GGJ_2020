@@ -6,7 +6,7 @@ namespace chibi.controller.steering.behavior
 	[CreateAssetMenu( menuName = "chibi/steering/behavior/arrive" )]
 	public class Arrive : Behavior
 	{
-		public float deacceleration_distant = 0.05f;
+		public float deacceleration_distant = 0.5f;
 
 		public override Vector3 desire_direction(
 			Steering controller, Transform target,

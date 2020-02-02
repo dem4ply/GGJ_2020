@@ -10,6 +10,7 @@ namespace space_beaver.motor
 		public bool stay_in_home = false;
 		protected bool _motor_own_physics = false;
 		protected Collider[] colliders;
+		float rotation_time = 0f;
 
 		public bool motor_own_physics
 		{
@@ -57,8 +58,8 @@ namespace space_beaver.motor
 			{
 				use_gravity = false;
 				base.update_motion();
-				var distant_to_home = Vector3.Distance( transform.position, home.position );
-				transform.rotation = Quaternion.Lerp( transform.rotation, home.rotation, distant_to_home );
+				rotation_time += Time.deltaTime * 0.25f;
+				transform.rotation = Quaternion.Lerp( transform.rotation, home.rotation, rotation_time );
 			}
 			if ( stay_in_home )
 			{
