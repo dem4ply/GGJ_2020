@@ -75,7 +75,7 @@ namespace chibi.controller.steering
 				//entity.sterring.debug.draw.arrow( behavior_direction, Color.black );
 				desire_direction += behavior_direction;
 			}
-			debug.draw.arrow( desire_direction, Color.black );
+			//debug.draw.arrow( desire_direction, Color.black );
 			controller.desire_direction = desire_direction;
 			controller.speed = controller.max_speed * desire_speed;
 		}

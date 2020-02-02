@@ -108,7 +108,6 @@ namespace chibi.motor
 
 			//transform.Translate( velocity_vector * Time.deltaTime );
 			var final_vector = velocity_vector * Time.deltaTime;
-			debug.warning( "{0}", final_vector );
 			transform.position += final_vector;
 			debug.draw.arrow( final_vector, Color.magenta );
 			_velocity = velocity_vector;
