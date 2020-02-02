@@ -14,6 +14,8 @@ namespace space_beaver.controller
 		public bool is_left_leaf = true;
 		public VrGrabber.VrgGrabber grabber;
 
+		public bool is_closed = false;
+
 		public sound.Sound attach;
 
 		public UnityEvent on_close = new UnityEvent();
@@ -71,6 +73,8 @@ namespace space_beaver.controller
 
 			steering.enabled = false;
 			Destroy( steering );
+
+			is_closed = true;
 
 		}
 
