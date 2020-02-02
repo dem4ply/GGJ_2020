@@ -383,7 +383,7 @@ public class VrgGrabber : MonoBehaviour
         grabInfo_.isKinematic = primary.grabInfo_.isKinematic;
     }
 
-    public void Release()
+    void Release()
     {
         if (!isGrabbing) return;
 
