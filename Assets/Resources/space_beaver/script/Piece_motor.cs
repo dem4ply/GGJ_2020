@@ -58,7 +58,7 @@ namespace space_beaver.motor
 				use_gravity = false;
 				base.update_motion();
 				var distant_to_home = Vector3.Distance( transform.position, home.position );
-				transform.rotation = Quaternion.Lerp( transform.rotation, home.rotation, distant_to_home );
+				transform.rotation = Quaternion.Lerp( transform.rotation, home.rotation, 1 / distant_to_home );
 			}
 			if ( stay_in_home )
 			{
