@@ -22,7 +22,7 @@ namespace space_beaver.stuff
 		IEnumerator change_level()
 		{
 			yield return new WaitForSeconds( time_to_change );
-			SceneManager.LoadScene( "Scenes/Nivel 2" );
+			SceneManager.LoadScene( scene_path );
 		 }
 	}
 }

@@ -695,7 +695,7 @@ MonoBehaviour:
   pool: {fileID: 0}
   time_to_change: 10
   is_going_to_change: 0
-  scene_path: Scenes/Nivel 3
+  scene_path: Scenes/introtes3
 --- !u!1001 &31968779
 PrefabInstance:
   m_ObjectHideFlags: 0
