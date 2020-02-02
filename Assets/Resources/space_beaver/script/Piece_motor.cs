@@ -57,6 +57,8 @@ namespace space_beaver.motor
 			if ( motor_own_physics )
 			{
 				use_gravity = false;
+				var r = GetComponent<Rigidbody>();
+				r.velocity = new Vector3( 0, 0, 0 );
 				base.update_motion();
 				rotation_time += Time.deltaTime * 0.25f;
 				transform.rotation = Quaternion.Lerp( transform.rotation, home.rotation, rotation_time );
