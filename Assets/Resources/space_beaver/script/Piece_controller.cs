@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UnityEngine.Events;
 using System.Collections.Generic;
 using UnityEngine;
 using space_beaver.motor;
@@ -14,6 +15,8 @@ namespace space_beaver.controller
 		public VrGrabber.VrgGrabber grabber;
 
 		public sound.Sound attach;
+
+		public UnityEvent on_close = new UnityEvent();
 
 		protected override void _init_cache()
 		{
@@ -127,6 +130,7 @@ namespace space_beaver.controller
 		public void close()
 		{
 			debug.log( "close" );
+			on_close.Invoke();
 		}
 
 		public void open()
